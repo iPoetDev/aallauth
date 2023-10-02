@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+# Django Library
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -62,8 +65,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR / 'templates',
-            # BASE_DIR / 'kore/templates/kore/',
-            # BASE_DIR / 'users/templates/users/',
+            BASE_DIR / 'kore/templates/kore/',
+            BASE_DIR / 'users/templates/users/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -90,20 +93,173 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+# AUTH_PASSWORD_VALIDATORS = [
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+#     },
+# ]
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+AUTH_USER_MODEL = 'users.DashUser'
+
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = False
+ACCOUNT_CHANGE_EMAIL = False
+ACCOUNT_TEMPLATE_EXTENSION = 'html'
+
+ACCOUNT_FORMS = {
+    'signup': 'allauth.account.forms.SignupForm',
+    'login': 'allauth.account.forms.LoginForm',
+    'reset_password': 'allauth.account.forms.ResetPasswordForm',
+    'change_password': 'allauth.account.forms.ChangePasswordForm',
+}
+
+# Account Email
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = '[Dash & Do] '
+ACCOUNT_EMAIL_MAX_LENGTH = 254
+ACCOUNT_MAX_EMAIL_ADDRESSES = 1
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = None
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_CONFIRMATION_HMAC = False
+ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 180
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
+ACCOUNT_LOGOUT_ON_GET = False
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = False
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = False
+ACCOUNT_LOGOUT_REDIRECT_URL = LOGIN_URL
+ACCOUNT_PREVENT_ENUMERATION = True
+ACCOUNT_SESSION_REMEMBER = None
+ACCOUNT_USERNAME_MIN_LENGTH = 6
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_BLACKLIST = []
+ACCOUNT_USERNAME_VALIDATORS = []
+ACCOUNT_USER_MODEL_EMAIL_FIELD = 'email'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '', 'static'),
+    os.path.join(BASE_DIR, 'kore', 'static'),
+    os.path.join(BASE_DIR, 'users', 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        'OPTIONS': {},
+    },
+}
+
+if not DEBUG:
+    STORAGES['staticfiles'] = {
+        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"}
+
+# ==================== Messages ====================
+# https://docs.djangoproject.com/en/4.2/ref/contrib/messages
+# https://docs.djangoproject.com/en/4.2/ref/contrib/messages/#message-displaying
+
+MESSAGE_LEVEL = 'messages.DEBUG'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+# MESSAGE_TAGS = {
+#     messages.DEBUG: 'alert-all',
+#     messages.INFO:  'alert-info',
+#     messages.SUCCESS: 'alert-ok',
+#     messages.WARNING: 'alert-ooh',
+#     messages.ERROR:  'alert-no',
+# }
+
+# Default: Django's SMTP
+# noinspection PyUnusedName
+DJSMTP_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# Use for development only: to stdout, only
+DJCONSOLE_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# DJ Test Runner uses this for testing
+# noinspection PyUnusedName
+DJMEMORY_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
+# noinspection PyUnusedName
+DJDUMMY_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
+ANYJET_BACKEND = "anymail.backends.mailjet.EmailBackend"
+
+ADMIN_EMAIL = 'webmaster@dash-and-do.xyz'
+SERVER_EMAIL = 'server@dash-and-do.xyz'  # noqa
+ADMINS = [ADMIN_EMAIL]
+MANAGERS = ADMINS
+EMAIL_SUBJECT_PREFIX = '[Django] '
+CERT = True
+DEFAULT_FROM_EMAIL = 'webmaster@dash-and-do.xyz'
+# noqa
+EMAIL_HOST = 'dash-and-do.xyz'
+EMAIL_HOST_PASSWORD = 'dash-and-do.xyz'
+EMAIL_HOST_USER = ''
+EMAIL_BACKEND = DJCONSOLE_BACKEND
+EMAIL_PORT = 8025
+EMAIL_USE_LOCALTIME = False
+
+if CERT is True:
+    EMAIL_USE_SSL = True
+else:
+    EMAIL_USE_TLS = True
+
+EMAIL_TIMEOUT = 60
+
+# Age of session cookie, Default 2 weeks (in seconds).
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
+SESSION_COOKIE_DOMAIN = None
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_PATH = '/'
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = False
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_SAVE_EVERY_REQUEST = False
+
+# Age of CSRF Cookie, Default 1 week (in seconds).
+CSRF_COOKIE_AGE = 0 * 60 * 24 * 7
+# CSRF_COOKIE_DOMAIN = None
+# CSRF_TRUSTED_ORIGINS = [ ]
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_NAME = 'csrfmiddlewaretoken'
+# CSRF_COOKIE_PATH = '/'
+# # See SESSION_COOKIE_SAMESITE flag for more info. Prevents X-Site requests.
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SECURE = False
+CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
+
+# # CSRF Session Management
+# # 1: Default Error Views: Session Middleware before other middleware
+CSRF_USE_SESSIONS = False
+CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -115,11 +271,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
