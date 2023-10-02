@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="RunServer Browser" type="Python.DjangoServer" factoryName="Django server" focusToolWindowBeforeRun="true">
+  <configuration default="false" name="RunServer Browser 8010" type="Python.DjangoServer" factoryName="Django server" focusToolWindowBeforeRun="true">
     <module name="aallauth" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
@@ -34,10 +34,10 @@
       <option name="useCurrentConnection" value="false" />
     </EXTENSION>
     <option name="launchJavascriptDebuger" value="false" />
-    <option name="port" value="8000" />
+    <option name="port" value="8010" />
     <option name="host" value="127.0.0.1" />
     <option name="additionalOptions" value="" />
-    <option name="browserUrl" value="http://127.0.0.1:8000/" />
+    <option name="browserUrl" value="http://127.0.0.1:8010/" />
     <option name="runTestServer" value="false" />
     <option name="runNoReload" value="false" />
     <option name="useCustomRunCommand" value="false" />
