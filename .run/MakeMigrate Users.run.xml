@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="MakeMigrate Users" type="PythonConfigurationType" factoryName="Python" editBeforeRun="true" focusToolWindowBeforeRun="true" show_console_on_std_err="true">
+  <configuration default="false" name="MakeMigrate Users" type="PythonConfigurationType" factoryName="Python" focusToolWindowBeforeRun="true" show_console_on_std_err="true">
     <module name="aallauth" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
@@ -33,9 +33,9 @@
       <option name="useCurrentConnection" value="false" />
     </EXTENSION>
     <option name="SCRIPT_NAME" value="manage.py" />
-    <option name="PARAMETERS" value="makemigrations $app" />
-    <option name="SHOW_COMMAND_LINE" value="true" />
-    <option name="EMULATE_TERMINAL" value="false" />
+    <option name="PARAMETERS" value="makemigrations users" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="true" />
     <option name="MODULE_MODE" value="false" />
     <option name="REDIRECT_INPUT" value="false" />
     <option name="INPUT_FILE" value="" />

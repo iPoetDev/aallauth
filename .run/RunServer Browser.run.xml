@@ -6,6 +6,7 @@
     <envs>
       <env name="PYTHONUNBUFFERED" value="1" />
       <env name="PYTHONWARNINGS" value="ignore" />
+      <env name="DJANGO_SETTINGS_MODULE" value="aallauth.settings" />
     </envs>
     <option name="SDK_HOME" value="D:\Code\Code Institute\aallauth\venv\Scripts\python.exe" />
     <option name="SDK_NAME" value="Python 3.11 (aallauth)" />
